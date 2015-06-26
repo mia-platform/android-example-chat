@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mk_api_endpoint">YOUR_BAAS_ENDPOINT</string>
+    <string name="mk_secret">YOUR_SECRET</string>
+    <string name="mk_gcm_sender_id">_YOUR_GCM_SENDER_ID</string>
+</resources>
