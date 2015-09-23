@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import eu.makeitapp.mkbaas.MKAppInstance;
-import eu.makeitapp.mkbaas.MKError;
-import eu.makeitapp.mkbaas.MKLoginActivity;
-import eu.makeitapp.mkbaas.MKUser;
-import eu.makeitapp.mkbaas.listener.MKSessionListener;
+import eu.makeitapp.mkbaas.core.Log;
+import eu.makeitapp.mkbaas.core.MKAppInstance;
+import eu.makeitapp.mkbaas.core.MKError;
+import eu.makeitapp.mkbaas.core.MKLoginActivity;
+import eu.makeitapp.mkbaas.core.MKPushExtension;
+import eu.makeitapp.mkbaas.core.MKSessionListener;
+import eu.makeitapp.mkbaas.core.MKUser;
+import eu.makeitapp.mkbaas.core.MKUserExtension;
+import retrofit.RestAdapter;
+
 
 /**
  * ${PROJECT}
@@ -25,16 +30,15 @@ public class MTPWelcomeActivity extends Activity {
 
 
         //Sdk entrypoint
-        MKAppInstance.sharedInstance().init(this, getString(R.string.mk_secret), getString(R.string.mk_api_endpoint));
-
-        //Init pish component
-        MKAppInstance.sharedInstance().initPush(this, getString(R.string.mk_gcm_sender_id));
+        MKAppInstance.sharedInstance().init(this, getString(R.string.mk_secret), getString(R.string.mk_api_endpoint), new MKUserExtension(), new MKPushExtension(getString(R.string.mk_gcm_sender_id)));
+        MKAppInstance.sharedInstance().setHttpLogLevel(RestAdapter.LogLevel.FULL);
+        MKAppInstance.sharedInstance().setLogLevel(Log.MKLogLevel.INFO);
 
         //Define custom push receiver
-        MKAppInstance.sharedInstance().setCustomPushIntentServiceClass(MTPPushIntentService.class);
+        MKPushExtension.getInstance().setCustomPushIntentServiceClass(MTPPushIntentService.class);
 
         //Try to restore a saved user session
-        MKAppInstance.sharedInstance().restoreUserSession(this, new MKSessionListener() {
+        MKUserExtension.restoreUserSession(this, new MKSessionListener() {
             @Override
             public void onRestore(MKUser mkUser, MKError mkError) {
                 //Error is null, all si fine, user founded!

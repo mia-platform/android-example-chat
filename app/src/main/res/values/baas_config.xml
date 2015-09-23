@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mk_api_endpoint">YOUR_BAAS_ENDPOINT</string>
-    <string name="mk_secret">YOUR_SECRET</string>
+    <string name="mk_api_endpoint">https://miachat.baas.makeitapp.eu</string>
+    <string name="mk_secret">fc5d6a93690eeb15d4e1add60f9ebb40afb331d21ebc8d5419de405a03791a02a35649482512ee606d79c49030e5e054a7fc975a3e60407dcf2638c08e13522ef8358c3bfa73c1f2a0df03fc151f7ee21c1313aed795804a3a80e5ef51f615846045935e03cd9cfbc4bbb0daa9fad1f987b47584e05669c8a630a05f0bed82e5ab58ed201430ee2fe6d1f773792bcbda89fc4a6b61eb4368d686bd722c0c9fcb65452a1cc5d839672a9394b4baeb861fbe877fa09bb9036a6099786407e34b4d4797ee372220ceb48fa8a0e47cfe01713cf64042a5e318f189c5d0cc0c9162b9dbde641fa15b5aff17aad094b7002f701d5f8288347ea78120c1b2ebd533c069</string>
     <string name="mk_gcm_sender_id">_YOUR_GCM_SENDER_ID</string>
 </resources>

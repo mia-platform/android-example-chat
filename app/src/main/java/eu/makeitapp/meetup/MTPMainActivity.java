@@ -29,20 +29,20 @@ import java.util.ArrayList;
 
 import eu.makeitapp.meetup.adapter.MTPMessageAdapter;
 import eu.makeitapp.meetup.model.MTPMessage;
-import eu.makeitapp.mkbaas.MKCollection;
-import eu.makeitapp.mkbaas.MKCollectionFile;
-import eu.makeitapp.mkbaas.MKError;
-import eu.makeitapp.mkbaas.MKQuery;
-import eu.makeitapp.mkbaas.listener.MKCallback;
+import eu.makeitapp.mkbaas.core.MKCollection;
+import eu.makeitapp.mkbaas.core.MKCollectionFile;
+import eu.makeitapp.mkbaas.core.MKError;
+import eu.makeitapp.mkbaas.core.MKQuery;
+import eu.makeitapp.mkbaas.core.listener.MKCallback;
 
 
 public class MTPMainActivity extends AppCompatActivity implements View.OnClickListener, MKCallback {
     private static final String ACTION_PUSH = "PUSH";
 
     private static final String PREFS_KEY__USERNAME = "KEY__USERNAME";
-    private static final String MESSAGE_COLLECTION_NAME = "MeetupMessage";
-    private static final String KEY__MESSAGE_TEXT = "messageText";
-    private static final String KEY__MESSAGE_CREATOR = "messageCreatorName";
+    private static final String MESSAGE_COLLECTION_NAME = "chatmessage";
+    private static final String KEY__MESSAGE_TEXT = "message";
+    private static final String KEY__MESSAGE_CREATOR = "alias";
     private static final String KEY__MESSAGE_ATTACHMENT = "messageAttachment";
 
     private static final int CAMERA_REQUEST_CODE = 2403;
@@ -241,7 +241,7 @@ public class MTPMainActivity extends AppCompatActivity implements View.OnClickLi
                     fileMessage.put(KEY__MESSAGE_TEXT, "image");
 
                     //Add the reference of uploaded file url
-                    fileMessage.put(KEY__MESSAGE_ATTACHMENT, collectionFile.getLocation());
+                    fileMessage.put(KEY__MESSAGE_ATTACHMENT, collectionFile.getRemoteFileName());
 
                     //Save the message on remote BaaS
                     fileMessage.save().doAsynchronously(null);

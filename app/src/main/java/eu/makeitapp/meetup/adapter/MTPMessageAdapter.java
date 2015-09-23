@@ -11,6 +11,12 @@ import java.util.ArrayList;
 
 import eu.makeitapp.meetup.R;
 import eu.makeitapp.meetup.model.MTPMessage;
+import eu.makeitapp.mkbaas.core.MKCollection;
+import eu.makeitapp.mkbaas.core.MKCollectionArrayList;
+import eu.makeitapp.mkbaas.core.MKCollectionFile;
+import eu.makeitapp.mkbaas.core.MKError;
+import eu.makeitapp.mkbaas.core.MKFileQuery;
+import eu.makeitapp.mkbaas.core.listener.MKCallback;
 
 /**
  * ${PROJECT}
@@ -33,11 +39,11 @@ public class MTPMessageAdapter extends RecyclerView.Adapter<MTPMessageViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MTPMessageViewHolder holder, int position) {
-        MTPMessage message = messageArrayList.get(position);
+    public void onBindViewHolder(final MTPMessageViewHolder holder, int position) {
+        final MTPMessage message = messageArrayList.get(position);
 
         holder.messageTextView.setText(message.getMessageText());
-        holder.senderTextView.setText(message.getMessageCreatorName());
+        holder.senderTextView.setText(message.getAlias());
 
         if (message.getMessageAttachment() == null || message.getMessageAttachment().isEmpty()) {
             holder.attachmentImageView.setVisibility(View.GONE);
@@ -45,10 +51,26 @@ public class MTPMessageAdapter extends RecyclerView.Adapter<MTPMessageViewHolder
         } else {
             holder.attachmentImageView.setVisibility(View.VISIBLE);
             holder.messageTextView.setVisibility(View.GONE);
-            Picasso.with(holder.itemView.getContext()).load(message.getMessageAttachment()).into(holder.attachmentImageView);
+
+            //File Download
+            MKFileQuery fileQuery = new MKFileQuery();
+            fileQuery.whereKeyEqualTo("file", message.getMessageAttachment());
+            fileQuery.findAll().doAsynchronously(new MKCallback() {
+                @Override
+                public void onCompleted(Object o, MKError mkError, Object o2) {
+                    if (mkError == null) {
+                        MKCollectionArrayList mkCollections = (MKCollectionArrayList) o;
+                        MKCollection file = mkCollections.get(0);
+                        Picasso.with(holder.itemView.getContext()).load(
+                                file.getAsString(MKCollectionFile.FIELD__FILE_LOCATION)).into(holder.attachmentImageView);
+                    }
+
+
+                }
+            });
         }
 
-        if (message.getMessageCreatorName() != null && message.getMessageCreatorName().equals(myUsername)) {
+        if (message.getAlias() != null && message.getAlias().equals(myUsername)) {
             holder.cardView.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.green_200));
         } else {
             holder.cardView.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.grey_1000w));

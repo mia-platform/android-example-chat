@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/libs/android-baas-sdk-adv-1.0.0.aar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/libs/android-baas-sdk-core-1.0.0.aar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/libs/android-baas-sdk-push-1.0.0.aar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/libs/android-baas-sdk-user-1.0.0.aar" charset="UTF-8" />
+  </component>
+</project>
